@@ -12,17 +12,17 @@ int main(void){
 
     while(testcase--){
         getline(cin, str);
-        #Using stack
+        //Using stack
         stack<char> s;
 
         for(char ch: str){
             if(ch == '('){
-                #Find if its a correct parenthesis string by matching values
+                //Find if its a correct parenthesis string by matching values
                 s.push(')');
             }
             else{
                 if(s.empty()){
-                    #Push any value so that the program can print "No"
+                    //Push any value so that the program can print "No"
                     s.push('.');
                     break;
                 }
