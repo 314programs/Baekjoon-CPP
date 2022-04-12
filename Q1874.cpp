@@ -6,7 +6,7 @@ int main(void){
     cin.tie(0), cout.tie(0);
 
     int testcase;
-    #Store it in a string and print later
+    //Store it in a string and print later
     string ans = "";
     int num;
     int last_num = 0;
@@ -28,11 +28,11 @@ int main(void){
         else{
             bool found = false;
             if(!s.empty()){
-                #Get the number on top of the function
+                //Get the number on top of the function
                 int top_ = s.top();
                 s.pop();
                 ans += '-';
-                #If the top number is not the number wanted, it is impossible
+                //If the top number is not the number wanted, it is impossible
                 if(top_ == num){
                     found = true;
                 }
