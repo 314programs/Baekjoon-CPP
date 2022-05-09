@@ -1,3 +1,4 @@
+//40ms
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -55,4 +56,59 @@ int main(void){
     cout << difference;
     
 }
+
+//36ms
+#include <bits/stdc++.h>
+using namespace std;
+
+int graph[20][20];
+int people_count;
+
+int score(vector<int> & team){
+    int sum_ = 0;
+    for(int i = 0; i < people_count/2; i++){
+        for(int j = 0; j < people_count/2; j++){
+            sum_ += graph[team[i]][team[j]];
+        }
+    }
+    return sum_;
+}
+
+int main(void){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL), cout.tie(NULL);
+    
+    cin >> people_count;
+    for(int i = 0; i < people_count; i++){
+        for(int j = 0; j < people_count; j++){
+            cin >> graph[i][j];
+        }
+    }
+
+    //Team 0 and 1 instead of 1 and 2
+    vector<int> people(people_count/2);
+    for(int i = 0; i < people_count/2; i++){
+        people.push_back(1);
+    }
+
+    int ans = 2147483647;
+
+    do{
+        vector<int> first_team;
+        vector<int> second_team;
+
+        for(int i = 0; i < people_count; i++){
+            if(people[i] == 0) first_team.push_back(i);
+            if(people[i] == 1) second_team.push_back(i);
+        }
+
+        ans = min(ans, abs(score(first_team) - score(second_team)));
+
+    } while(next_permutation(people.begin(), people.end()));
+
+    cout << ans;
+
+}
+
+
 
