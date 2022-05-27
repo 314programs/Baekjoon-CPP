@@ -41,10 +41,10 @@ int main(void){
             
             //Outside bounds?
             if(ny < 0 || ny >= 8 || nx < 0 || nx >= 8) continue;
-            //Collide with a wall?
+            //If merged with wall?
             if(ny - nt >= 0 && graph[ny-nt][nx] == '#') continue;
-            //Merge with a wall?
-            if(ny - nt + 1 >= 0 && graph[ny-nt-1][nx] == '#') continue;
+            //Collid with wall?
+            if(ny - nt - 1 >= 0 && graph[ny-nt-1][nx] == '#') continue;
 
             if(visited[ny][nx][nt] == 0){
                 visited[ny][nx][nt] = 1;
