@@ -1,0 +1,2 @@
+Data structures are a particular method to organise data in a computer
+Some can be more more effective in certain situations, so its good to know their uses well.
