@@ -19,7 +19,7 @@ int main()
     DP[1][1] = 1;
     for(int y = 2; y <= n; y++){
         for(int x = 1; x <= y; x++){
-            DP[y][x] = (DP[y-1][x] + DP[y-1][x-1]) % 10007;
+            DP[y][x] = DP[y-1][x] + DP[y-1][x-1];
         }
     }
 
