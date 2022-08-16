@@ -1,7 +1,8 @@
-//I have no idea how this works... I will comment more when I learn more
+//May make more changes later on
 #include <bits/stdc++.h>
 using namespace std;
 
+//Aho_corasick structure
 struct Aho_cora{
     struct Node{
         map<int, int> children;
@@ -13,7 +14,8 @@ struct Aho_cora{
             len = 0;
         }
     };
-
+    
+    //Aho corasick = Trie + KMP
     vector<Node> trie;
     int root;
 
@@ -29,6 +31,7 @@ struct Aho_cora{
 
     void add(int node, string & s, int index){
         if(index == s.size()){
+            //Save length of the words
             trie[node].len = index;
             return;
         }
@@ -43,7 +46,8 @@ struct Aho_cora{
     void add(string & s){
         add(root, s, 0);
     }
-
+    
+    //Getting all fail values of node using BFS
     void make(){
         queue<int> q;
         trie[root].pi = root;
@@ -77,7 +81,8 @@ struct Aho_cora{
             }
         }
     }
-
+    
+    //Function for finding the substring
     int next(int node, char ch){
         int c = ch - 'a';
         while(node != root && trie[node].children.count(c) == 0){
@@ -94,6 +99,7 @@ struct Aho_cora{
         vector<pair<int, int>> matches;
         for(int i = 0; i < s.size(); i++){
             node = next(node, s[i]);
+            //Push back start and ending index to calculate length with
             if(trie[node].len > 0){
                 matches.push_back(make_pair(i-trie[node].len + 1, -1));
                 matches.push_back(make_pair(i, 1));
@@ -105,7 +111,7 @@ struct Aho_cora{
         int start = 0;
         int open = 0;
 
-        //Sweeping algorithm that I have to learn soon
+        //Sweeping algorithm that calculates the total sum of lines with overlap
         for(auto &p : matches){
             if(p.second == -1){
                 if(open == 0) start = p.first;
@@ -140,6 +146,8 @@ int main()
         cin >> temp;
         ac.add(temp);
     }
+    //Finding all substrings inside the list
     ac.make();
+    //Since we found the substrings inside the list, subtract it from the length of the string to get answer
     cout << n - ac.solve(s) << "\n";
 }
