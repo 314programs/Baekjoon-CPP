@@ -65,6 +65,7 @@ int main()
     }
 
     //Get the log value first
+    //Remember that the log value is base 2
     for(log_ = 1; (1 << log_) <= n; log_++);
     log_--;
     DFS(1, 1);
