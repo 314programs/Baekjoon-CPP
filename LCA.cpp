@@ -2,7 +2,6 @@
 using namespace std;
 
 const int MAX = 100001;
-int dist[MAX];
 int p[MAX][20];
 int log_ = 0;
 int timer = 0;
