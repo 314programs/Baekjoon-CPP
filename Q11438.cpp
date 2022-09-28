@@ -105,6 +105,122 @@ int main()
         cin >> a >> b;
         cout << LCA(a, b) << "\n";
     }
+    
+}
 
+//Code using segment trees, we want to find the node with lowest depth between the range i and j
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> a[100001];
+//When was this node firstly visited?
+vector<int> first;
+//Order of visit
+vector<int> dfs_order;
+//Depth
+vector<int> level;
+
+void init(vector<int> &tree, int node, int start, int end){
+    //Use the index since value is unknown
+    if(start == end){
+        tree[node] = start;
+    }
+    else{
+        init(tree, node*2, start, (start+end)/2);
+        init(tree, (node*2)+1, ((start+end)/2)+1, end);
+        //Use the depth to find the min
+        if(level[tree[node*2]] < level[tree[(node*2)+1]]){
+            tree[node] = tree[node*2];
+        }
+        else{
+            tree[node] = tree[(node*2)+1];
+        }
+    }
+}
+
+int query(vector<int> &tree, int node, int start, int end, int i, int j){
+    if(start > j || end < i) return -1;
+    if(start >= i && end <= j){
+        return tree[node];
+    }
+
+    int n1 = query(tree, node*2, start, (start+end)/2, i, j);
+    int n2 = query(tree, (node*2)+1, ((start+end)/2)+1, end, i, j);
+
+    if(n1 == -1){
+        return n2;
+    }
+    else if(n2 == -1){
+        return n1;
+    }
+    else{
+        //Using levels once again
+        if(level[n1] < level[n2]){
+            return n1;
+        }
+        else{
+            return n2;
+        }
+    }
+}
+
+//Basic DFS
+//Length of dfs_order and level are equal
+void dfs(int node, int parent, int depth){
+    dfs_order.push_back(node);
+    level.push_back(depth);
+    for(int item : a[node]){
+        if(item == parent) continue;
+        dfs(item, node, depth+1);
+        dfs_order.push_back(node);
+        level.push_back(depth);
+    }
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL), std::cout.tie(NULL);
+
+    int n;
+    cin >> n;
+
+    for(int i = 0; i < n-1; i++){
+        int f, t;
+        cin >> f >> t;
+        a[f].push_back(t);
+        a[t].push_back(f);
+    }
+    first.resize(n+1, -1);
+    dfs(1, 0, 0);
+
+    //First index for the node to appear
+    for(int i = 0; i < dfs_order.size(); i++){
+        int node = dfs_order[i];
+        if(first[node] == -1){
+            first[node] = i;
+        }
+    }
+    
+    //this is important as n will be used to aquire the index for dfs_order
+    n = dfs_order.size();
+    int h = (int) ceil(log2(n));
+    int tree_h = (1 << (h+1));
+    vector<int> tree(tree_h);
+    init(tree, 1, 0, n-1);
+
+    int m;
+    cin >> m;
+    while(m--){
+        int u, v;
+        cin >> u >> v;
+        
+        int i = first[u];
+        int j = first[v];
+        if(i > j) swap(i, j);
+        
+        //Use index instead of value, get value later using the array
+        int lca = query(tree, 1, 0, n-1, i, j);
+        cout << dfs_order[lca] << "\n";
+    }
     
 }
