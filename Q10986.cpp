@@ -16,20 +16,23 @@ int main()
         int num;
         cin >> num;
         s[i] = s[i-1] + num;
+        s[i] %= m;
     }
 
     map<int, int> cnt;
     cnt[0] = 1;
     ll ans = 0;
 
-    //When 2 numbers have the same remainder and they are subtracted, they will be dividable
+    //s[j] - s[i-1] = m
+    //s[j] - m = s[i-1]
     for(int j = 1; j <= n; j++){
-        ans += cnt[s[j]%m];
-        cnt[s[j]%m] += 1;
+        ans += cnt[s[j]];
+        cnt[s[j]] += 1;
     }
     cout << ans;
 
 }
+
 
 //Another method (faster)
 #include <bits/stdc++.h>
