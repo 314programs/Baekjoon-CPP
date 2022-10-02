@@ -164,3 +164,56 @@ int main()
     }
     
 }
+
+//Another method using fenwick tree
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+void update(vector<ll> &tree, int i, ll diff){
+    while(i < tree.size()){
+        tree[i] += diff;
+        i += (i & -i);
+    }
+}
+
+ll query(vector<ll> &tree, int i){
+    ll ans = 0;
+    while(i > 0){
+        ans += tree[i];
+        i -= (i & -i); 
+    }
+    return ans;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL), std::cout.tie(NULL);
+
+    ll n, m, k;
+    cin >> n >> m >> k;
+    vector<ll> a(n+1);
+    vector<ll> tree(n+1, 0);
+
+    for(int i = 1; i <= n; i++){
+        cin >> a[i];
+        update(tree, i, a[i]);
+    }
+
+    m += k;
+
+    while(m--){
+        ll i, j, k;
+        cin >> i >> j >> k;
+        if(i == 1){
+            ll diff = k - a[j];
+            a[j] = k;
+            update(tree, j, diff);
+        }
+        else{
+            cout << query(tree, k) - query(tree, j-1) << "\n";
+        }
+    }
+
+}
