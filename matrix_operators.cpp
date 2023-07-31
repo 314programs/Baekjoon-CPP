@@ -15,3 +15,19 @@ matrix operator * (const matrix &a, const matrix &b){
 	}
 	return c;
 }
+
+matrix power(int n, matrix a){
+	if(n == 0){
+		return {{1, 0}, {0, 1}};
+	}
+	else if(n == 1){
+		return a;
+	}
+	else if(n%2 == 0){
+		matrix temp = power(n/2, a);
+		return temp*temp;
+	}
+	else{
+		return a * power(n-1, a);
+	}
+}
