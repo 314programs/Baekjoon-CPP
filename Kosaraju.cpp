@@ -36,7 +36,6 @@ void dfs2(int x){
 
 	for(auto ch: rev_edge[x]){
 		if(!visited[ch]){
-			cout << ch << " ";
 			dfs2(ch);
 		}
 	}
