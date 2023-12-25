@@ -20,9 +20,31 @@ matrix operator *(const matrix &a, const matrix &b){
             ans[i][j] = 0;
             for(int k = 0; k < n; k++){
                 ans[i][j] += a[i][k] * b[k][j];
+		ans[i][j] %= mod;
             }
-            ans[i][j] %= mod;
         }
     }
     return ans;
+}
+
+
+int32_t main(){
+
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL), std::cout.tie(NULL);
+
+	//Power, matrix size
+	int p, m;
+
+	vector<vector<int>> ans(m, vector<int>(m));
+	vector<vector<int>> a(m, vector<int>(m));
+
+	while(p > 0){
+		if(p%2 == 1){
+			ans = ans * a;
+		}
+		a = a*a;
+		p /= 2;
+	}
+
 }
