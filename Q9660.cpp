@@ -18,6 +18,7 @@ int32_t main(){
 	int n;
 	cin >> n;
 
+	//Located a repeating pattern 
 	if(n%7 == 2 || n%7 == 0){
 		cout << "CY";
 	}
