@@ -35,9 +35,17 @@ int32_t main(){
 
 	//Power, matrix size
 	int p, m;
+	cin >> p >> m;
 
 	vector<vector<int>> ans(m, vector<int>(m));
 	vector<vector<int>> a(m, vector<int>(m));
+
+	for(int i = 0; i < m; i++){
+		for(int j = 0; j < m; j++){
+			cin >> a[i][j];
+			if(i == j) ans[i][j] = 1;
+		}
+	}
 
 	while(p > 0){
 		if(p%2 == 1){
@@ -45,6 +53,13 @@ int32_t main(){
 		}
 		a = a*a;
 		p /= 2;
+	}
+
+	for(int i = 0; i < m; i++){
+		for(int j = 0; j < m; j++){
+			cout << ans[i][j] << " ";
+		}
+		cout << "\n";
 	}
 
 }
